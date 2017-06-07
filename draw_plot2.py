@@ -1,5 +1,6 @@
 from matplotlib.patches import Ellipse
 import matplotlib.pyplot as plt
+import numpy as np
 from numpy import random as rnd
 fig =plt.figure(figsize=(10,10),dpi=400)
 ax = fig.add_subplot(111,aspect='equal')
