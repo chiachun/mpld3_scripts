@@ -2,12 +2,12 @@ import pandas as pd
 import math
 from pythonds.graphs import Graph
 
-dfin = pd.read_csv('places365_tsne2_n100_pca50.csv',index_col=0)
+dfin = pd.read_csv('places365_tsne2.csv',index_col=0)
 recs = dfin.T.to_dict().items()
 #points = zip(dfin['x0'], dfin['x1'])
 #spreads = zip(dfin['sig0'], dfin['sig1'])
 
-w = 7
+w = 2
 
 def distance_square(p1,p2):
     return (p1[0]-p2[0])**2 + (p1[1]-p2[1])**2 
@@ -69,7 +69,7 @@ import six
 #colors_ = colors.ColorConverter.colors.keys()
 #colors_.extend(['turquoise','lightgoldenrodyellow','lavender','maroon'])
 colors_ = [rnd.rand(3) for i in range(len(forest))]
-fig =plt.figure(figsize=(20,20),dpi=1080)
+fig =plt.figure(figsize=(15,15),dpi=800)
 ax = fig.add_subplot(111,aspect='equal')
 
 # merge labels in the same buckets into one label
@@ -85,9 +85,9 @@ for i,trees in enumerate(forest):
         e.set_alpha(0.5)
         ax.add_artist(e)
         ax.annotate(t[4], (avg0,avg1), fontsize=5, color=color)
-ax.set_xlim(-2,2)
-ax.set_ylim(-2,2)
+ax.set_xlim(-10,10)
+ax.set_ylim(-10,10)
 plt.tight_layout()
-plt.savefig('tsne_grouping.png')
+plt.savefig('tsne_grouping.png',dpi=800)
 
 
