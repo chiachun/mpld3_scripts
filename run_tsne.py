@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.manifold import TSNE
+from sklearn.decomposition import PCA
 import glob
 import os
 
@@ -13,7 +14,8 @@ label_names = os.listdir(bottleneck_dir+bottlename)
 
 xs = []
 
-nsample = 100
+
+nsample = 10
 for i in range(365):
     label_name = label_names[i]
     paths = glob.glob('%s/%s/%s/*.txt' % (bottleneck_dir, bottlename,label_name))
@@ -26,8 +28,12 @@ for i in range(365):
         
 X = np.vstack(xs)
 
+pca = PCA(n_components=50)
+pca.fit(X)
+xpca = pca.transform(X)
+
 model = TSNE(n_components=2)
-xp = model.fit_transform(X)
+xp = model.fit_transform(xpca)
 
 x0s =[]; x1s=[]; 
 s0s= []; s1s=[]; 
@@ -51,4 +57,4 @@ df = pd.DataFrame({"label":label_names,
 
     
 
-df.to_csv("places365_tsne2_n100.csv")
+df.to_csv("places365_tsne2_n10_pca50.csv")
