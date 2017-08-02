@@ -2,23 +2,23 @@ from mpld3 import plugins, utils
 import mpld3
 import matplotlib
 
-class ReadImg(plugins.PluginBase):
+class LinkImg(plugins.PluginBase):
     JAVASCRIPT = """
-    mpld3.register_plugin("ReadImg", ReadImgPlugin);
-    ReadImgPlugin.prototype = Object.create(mpld3.Plugin.prototype);
-    ReadImgPlugin.prototype.constructor = ReadImgPlugin;
-    ReadImgPlugin.prototype.requiredProps = ["id_patches", "filenames"];
-    ReadImgPlugin.prototype.defaultProps = {button: true, enabled:null};
+    mpld3.register_plugin("LinkImg", LinkImgPlugin);
+    LinkImgPlugin.prototype = Object.create(mpld3.Plugin.prototype);
+    LinkImgPlugin.prototype.constructor = LinkImgPlugin;
+    LinkImgPlugin.prototype.requiredProps = ["id_patches", "filenames"];
+    LinkImgPlugin.prototype.defaultProps = {button: true, enabled:null};
     
     // Constructor
-    function ReadImgPlugin(fig, props){
+    function LinkImgPlugin(fig, props){
         mpld3.Plugin.call(this, fig, props);
         if (this.props.enabled === null){this.props.enabled = !(this.props.button);}
         var enabled = this.props.enabled;
-        console.log("Add ReadImgButton only if there are three buttons to avoid duplicate")
+        console.log("Add LinkImgButton only if there are three buttons to avoid duplicate")
         if (this.props.button && this.fig.buttons.length===3){
-            var ReadImgButton = mpld3.ButtonFactory({
-                buttonID: "readimg",
+            var LinkImgButton = mpld3.ButtonFactory({
+                buttonID: "linkimg",
                 sticky: true,
                 actions: ["drag"],
                 onActivate: this.activate.bind(this),
@@ -27,21 +27,21 @@ class ReadImg(plugins.PluginBase):
                 icon: function(){return mpld3.icons["brush"];},
             });
 
-            this.fig.buttons.push(ReadImgButton);
+            this.fig.buttons.push(LinkImgButton);
         }
-        this.extentClass = "ReadImg";
+        this.extentClass = "LinkImg";
     };
     // End of constructor
     
-        ReadImgPlugin.prototype.activate = function(){
+        LinkImgPlugin.prototype.activate = function(){
             if(this.enable) this.enable();
     };
 
-        ReadImgPlugin.prototype.deactivate = function(){
+        LinkImgPlugin.prototype.deactivate = function(){
             if(this.disable) this.disable();
     };
 
-    ReadImgPlugin.prototype.draw = function(){
+    LinkImgPlugin.prototype.draw = function(){
         var obj = mpld3.get_element(this.props.id_patches,this.fig);
         var filenames = this.props.filenames;
 
@@ -208,7 +208,7 @@ class ReadImg(plugins.PluginBase):
         else:
             suffix = None
 
-        self.dict_ = {"type": "ReadImg",
+        self.dict_ = {"type": "LinkImg",
                       "button": button,
                       "enabled": enabled,
                       "id_patches": utils.get_id(patches, suffix),
